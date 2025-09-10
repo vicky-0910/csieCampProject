@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <script src="{% static 'js/ptcontrol.js' %}" defer></script>
+    <script src="{% static 'js/switch.js' %}" defer></script>
+{% endblock %}
+
+{% block main%}
+<main>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    
+    <h2>身分：{{request.user.username}}</h2>
+    <div class="table-container">
+    <ul class="tabs">
+      <li >Bingo</li>
+      <li>積彈高〔銀行〕</li>
+      <li>積彈高〔結算〕</li>
+      <li>晚會Bonus</li>
+      <li>隱藏任務｜校正</li>
+    </ul>
+
+    <!--Bingo-->
+    <form method="POST" action="{% url 'control' %}">
+        {% csrf_token %}
+        <input type="hidden" name="formid" value="bingo">
+        <table id="bingo">
+        <caption>計分規則：一個數字+3，連成一條線額外+10；第一名75000pt，向後遞減5000pt。</caption>
+        <thead>
+            <tr>
+            <td colspan="3">活動開始時間：{{ Bingotime }}</td>
+            <td colspan="3">
+                <button onclick="return confirm('確定開始遊戲？')">
+                    <a href="{% url 'start' %}">開始</a>
+                </button>
+            </td>
+            </tr>
+            <tr>
+            <th>隊伍</th>
+            <th>物品數量</th>
+            <th>連線數量</th>
+            <th>得分</th>
+            <th>排名</th>
+            <th>添加積分</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in teams %}
+            <tr>
+                <td>第{{ i.num }}小隊</td>
+                <td><input type="number" name="item_{{ forloop.counter }}" placeholder="0" min="0" required></td>
+                <td><input type="number" name="line_{{ forloop.counter }}" placeholder="0" min="0" required></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0 pt</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr><td colspan="6"><button type="submit" onclick="return confirm('僅限提交一次，確定內容無誤？')">確定</button></td></tr>
+        </tfoot>
+        </table>
+    </form>
+
+    <!--賭場銀行-->
+    <form method="POST" action="{% url 'control' %}">
+        {% csrf_token %}
+        <input type="hidden" name="formid" value="casinobank">
+        <table id="casinobank">
+        <caption>兌換規則：每個籌碼500pt</caption>
+        <thead>
+            <th>隊伍</th>
+            <th>可用積分</th>
+            <th>兌換籌碼</th>
+            <th>剩餘積分</th>
+        </thead>
+        <tbody>
+            <tr>
+            <td>
+            <select name="teamid">
+                {% for i in teams %}
+                <option value="{{ forloop.counter }}" data-points="{{ i.team.current_points }}">
+                    第{{i.num}}小隊
+                </option>
+                {% endfor %}
+            </select>
+            </td>
+            <td>{{teams.0.team.current_points}} pt</td>
+            <td><input type="number" name="chip" placeholder="0" min="1" required></td>
+            <td>0 pt</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <td colspan="4"><button type="submit">確認</button></td>
+        </tfoot>
+        </table>
+    </form>
+
+    <!--賭場結算-->
+    <form method="POST" action="{% url 'control' %}">
+        {% csrf_token %}
+        <input type="hidden" name="formid" value="casinoend">        
+        <table id="casinoend">
+        <caption>結算規則：定存積分×1.1+持有籌碼×500</caption>
+        <thead>
+            <th>隊伍</th>
+            <th>定存積分</th>
+            <th>持有籌碼</th>
+            <th>添加積分</th>
+        </thead>
+        <tbody>
+            {% for i in teams %}
+            <tr>
+                <td>第{{ i.num }}小隊</td>
+                <td>{{ i.team.fixed_savings }} pt</td>
+                <td><input type="number" name="chip_{{ forloop.counter }}" placeholder="0" min="0" required></td>
+                <td>0 pt</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <td colspan="4"><button type="submit" onclick="return confirm('僅限提交一次，確定內容無誤？')">確定</button></td>
+        </tfoot>
+        </table>
+    </form>
+
+    <!--晚會Bonus-->
+    <form method="POST" action="{% url 'control' %}">
+        {% csrf_token %}
+        <input type="hidden" name="formid" value="bonus">
+        <table id="bonus">
+        <caption>
+            我不知道這東西的規則。
+        </caption>
+        <thead>
+        <tr>
+            <th>當前題號</th>
+            <th>答對隊伍</th>
+            <th>添加積分</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> Q.{{ Qnum }}</td>
+                <td>
+                <select name="teamid">
+                    <option value="1">第一小隊</option>
+                    <option value="2">第二小隊</option>
+                    <option value="3">第三小隊</option>
+                    <option value="4">第四小隊</option>
+                    <option value="5">第五小隊</option>
+                    <option value="6">第六小隊</option>
+                </select>
+                </td>
+                <td><input type="number" name="pt" placeholder="0" value="300" required></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <td colspan="3"><button type="submit">確定</button></td>
+        </tfoot>
+        </table>
+    </form>    
+
+    <!--隱藏任務||校正-->
+    <form method="POST" action="{% url 'control' %}">
+        {% csrf_token %}
+        <input type="hidden" name="formid" value="other">
+        <table id="other" style="width: 100%; table-layout: fixed;">
+        <caption>
+            隱藏任務: <br>
+            (1) 貼便利貼，貼到一位10000pt；貼到兩位17000pt；貼到三位25000pt<br> 
+            (2) 活動各處每個拍照任務點可得2000pt<br>
+            (3) 破冰、Bingo、烤肉、賭場、Pizza皆有拍到全隊合照，則獲得20000pt<br>
+            (4) 賭場集章卡，達成則獲得30000pt
+        </caption>
+        <thead>
+        <tr>
+            <th>隊伍</th>
+            <th>積分</th>
+            <th>原因</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for i in teams %}
+            <tr>
+                <td>第{{ i.num }}小隊</td>
+                <td><input type="number" name="pt_{{ forloop.counter }}" placeholder="0" ></td>
+                <td>
+                <input type="text" name="reason_{{ forloop.counter }}" list="hiddentask1" >
+                    <datalist id="hiddentask1">
+                      <option value="貼便利貼">
+                      <option value="拍照任務點">
+                      <option value="四個活動全隊合照">
+                      <option value="賭場集章卡">
+                      <option value="其他">
+                    </datalist>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="3"><button type="submit">確定</button></td>
+        </tr>
+        </tfoot>
+        </table>
+    </form>  
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const activeForm = "{{ active_formid }}";
+        const tabs = document.querySelectorAll('.tabs li');
+        const tables = document.querySelectorAll('.table-container table');
+
+        tabs.forEach((t, i) => {
+          const tableId = tables[i].id;
+          if (tableId === activeForm) {
+            t.classList.add('active');
+            tables[i].classList.add('open');
+          } else {
+            t.classList.remove('active');
+            tables[i].classList.remove('open');
+          }
+        });
+      });
+    </script>
+    </div>
+</main>
+{% endblock %}

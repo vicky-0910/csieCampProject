@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block main %}
+	<main>
+		{% if error %}
+		<div class="message">
+		    {{ error }}
+		</div>
+		{% endif %}
+	    <div class="login-container">
+	        <form method="POST" action="{% url 'login' %}">
+			    {% csrf_token %}
+				<table>
+				  <caption style="border-bottom: 3px solid #555;"><h2>活動登入</h2></caption>
+
+				  <tr>
+				    <td>帳號：</td>
+				    <td><input type="text" name="username" required><br></td>
+				  </tr>
+				  <tr>
+				    <td>密碼：</td>
+				    <td><input type="password" name="password" required><br></td>
+				  </tr>
+				  <tr>
+				    <td colspan="2"><button type="submit">登入</button></td>
+				  </tr>
+				</table>
+	        </form>
+	    </div>
+    </main>
+{% endblock %}

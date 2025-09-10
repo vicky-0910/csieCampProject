@@ -1,0 +1,185 @@
+/* export to userptlog, adminptlog, ptcontrol */
+
+.table-container{
+	max-width: 100%;
+	background-color: #777;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tabs{
+	color: #333;
+	display: flex;
+	text-align: left;
+	align-items: center;
+}
+.tabs li{
+	font-weight: bold;
+	cursor: pointer;
+}
+.tabs li.active{
+	color: #fff;
+	background-color: #333;
+}
+
+table{
+	background: #333;
+	width: 100%;
+    text-align: center;
+	align-items: center;
+    display: table;
+}
+.table-container table{
+    display: none;
+}
+.table-container table.open{
+	background: #333;
+	width: 100%;
+	min-width: 50vw;
+    text-align: center;
+	align-items: center;
+    display: table;
+}
+table thead th{
+	font-weight: bold;
+}
+table caption{
+	color: #333;
+	caption-side: bottom;
+	text-align: left;
+}
+table tr td{
+	text-align: center;
+	vertical-align: middle; 
+	justify-content: center;
+}
+table tr td.record.plus{
+	color: #b8f818;
+}
+table tr td.record.minus{
+	color: #f83800;
+}
+table tr td.time{
+	vertical-align: middle; 
+	text-align: left;
+	color: #888;
+}
+table tr td input{
+	opacity: .5;
+}
+table tr button{
+	padding: 5px 5px;
+	text-decoration: none;
+	background-color: #b8f818;
+}
+table button a{
+	text-decoration: none;
+}
+table tr button.delete{
+	background-color: #f83800;
+}
+table tr button:hover{
+	background-color: #f8d878;
+	color: #004058;
+}
+table tr select{
+	opacity: .5;
+}
+
+/*手機版面*/
+@media (max-width: 768px) {
+	.table-container{
+		margin: 15px 0px ;
+	}
+	.tabs{
+		flex-wrap: wrap !important;
+		text-align: center;
+		justify-content: center;
+		padding: 0px 25px;
+	}
+	.tabs li{
+		padding: 6px;
+		font-size: 12px;
+	}
+	.tabs li.active{
+		font-size: 16px;
+	}
+
+	table thead th{
+		padding: 6px;
+	}
+	table tr{
+		padding: 6px;
+		border-top: 3px solid #555;
+	}
+	table tr td{
+		padding: 6px;
+	}
+	table tr td.record{
+		text-align: center;
+		padding: 6px 10px 0px;
+    }
+	table tr td.time{ 
+		text-align: right;
+		padding: 2px 10px 6px;
+		font-size: 8px;
+    }
+	table caption{
+		padding: 5px 30px;
+	}
+	table tr td input{
+		width: 100%;
+	}
+	table tr select{
+		font-size: 12px;
+	}	
+}
+
+/*電腦版面*/
+@media (min-width: 769px) {
+	.table-container{
+		margin: 30px 0px;
+		border: 3px solid #555;
+	}
+	.tabs{
+		padding: 0px 60px;
+	}
+	.tabs li{
+		padding: 10px;
+		font-size: 20px;
+	}
+	.tabs li.active{
+		border-left: 3px solid #555;
+	    border-right: 3px solid #555;
+		font-size: 20px;
+	}
+
+	table thead th{
+		padding: 10px;
+	}
+	table tr{
+		padding: 10px;
+		border-top: 3px solid #555;
+		border-bottom: 3px solid #555;
+	}
+	table tr td{
+		padding: 10px;
+	}
+	table tr td.record{
+		vertical-align: middle; 
+		text-align: center;
+		padding: 10px 10px 0px;
+    }
+	table tr td.time{
+		vertical-align: middle; 
+		text-align: right;
+		padding: 2px 10px 10px;
+		font-size: 12px;
+    }
+	table caption{
+		padding: 5px 60px;
+	}
+	table tr select{
+		font-size: 20px;
+	}	
+}

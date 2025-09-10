@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block main%}
+    <main>
+        {% if messages %}
+        {% for message in messages %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+        <div class="banner">
+            <h1>
+                定存積分<br>
+                {% if teamfixed == -1 %}
+                <form method="POST" action="{% url 'casino' %}">
+                {% csrf_token %}
+                    <input type="number" placeholder="0" min="0" name="fixed"><br>
+                    <button type="submit" onclick="return confirm('定存決定後不可更改，確定提交？')"><span>提交</span></button>
+                </form>
+                {% else %}
+                    {{ teamfixed }} pt
+                {% endif %}
+            </h1>
+            <p style="text-align: left; padding: 10px;">
+                ◇ 定金於賭場遊戲中不可挪用<br>
+                ◇ 賭場結束後乘上1.1返還
+            </p>
+        </div>
+
+        <div class="boxbg" style="background: #07a5c3">
+            <h2 class="subtitle">
+                CasinoRules<br>
+                積彈高規則
+            </h2>
+            <div class="inbox" style="background-color: #f6e7d8; color: #777;">
+                ◇ 每組先討論要存多少定金，定金於賭場遊戲中不可挪用，賭場結束後乘上1.1返還各位 <br>
+                ◇ 自由玩，不須小隊行動!!<br>
+                ◇ 一開始每人發10張籌碼，以最多成員的小隊為基準<br>
+                ◇ 若需要更多籌碼，可至銀行用小組積分換籌碼(500積分換一張籌碼)<br>
+                ◇ 一次最多壓五張籌碼，最少一張<br>
+                ◇ 莊家會於每輪遊戲前講解一次規則<br>
+                ◇ 有休息區讓大家可以好好休息<br>
+                ◇ 集章卡一人一張，需所有人玩過所有遊戲才算隱藏任務成功<br>
+            </div>
+        </div>
+
+        <div class="boxbg" style="background: #f4b324">
+            <h2 class="subtitle">
+                CasinoRules<br>
+                各遊戲規則
+            </h2>
+            <ul style="position: sticky; top: 80px; z-index: 10;">
+                <li onclick="scrollto('casino1')">射龍門</li>
+                <li onclick="scrollto('casino2')">妞妞</li>
+                <li onclick="scrollto('casino3')">21點</li>
+                <li onclick="scrollto('casino4')">百家樂</li>
+                <li onclick="scrollto('casino5')">骰子牛</li>
+                <li onclick="scrollto('casino6')">十八仔</li>
+                <li onclick="scrollto('casino7')">賽瓶蓋</li>
+                <li onclick="scrollto('casino8')">彩票</li>
+            </ul>
+            <dl>
+                <dt id="casino1">射龍門</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 每人開局需付入場費一點以拿到兩副龍門。<br>
+                    ◇ 兩副龍門會放在桌上作為範圍。<br>
+                    ◇ 自行決定是否下注成為玩家，可選擇兩組都下、只下其中一組、都不下。
+                    若不下注，將不會退回入場費。<br>
+                    ◇ 關主從左手邊第一位玩家順時針各發一張牌。<br>
+
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>中牌</td><td>玩家持牌大小在龍門中間</td><td>贏1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>沒中</td><td>玩家持牌不在龍門中間</td><td>輸1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>撞柱</td><td>玩家持牌與任一張龍門牌相同</td><td>輸2倍</td>  
+                    </tr>
+                    <tr>
+                        <td colspan="2">當開出連號龍門(Ex：6、7)時，<br>玩家持牌跟其中一張相同</td><td>贏2倍</td>  
+                    </tr> 
+                    </table>
+                </dd>
+
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">特殊規則</dd>
+                <dd>
+                    當龍門為相同的牌(Ex：7、7 或)時：<br>
+                    ◇ 自行決定是否下注成為玩家，可選大於或小於龍門牌。<br>
+                    ◇ 關主從左手邊第一位玩家順時針各發一張牌。<br> 
+
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>中牌</td><td>玩家持牌符合下注條件</td><td>贏1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>沒中</td><td>玩家持牌不符合下注條件</td><td>輸1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>撞柱</td><td>玩家第三張牌與龍門兩張牌相同</td><td>輸2倍</td>  
+                    </tr>
+                    </table>
+                </dd>
+ 
+                <dt id="casino2">妞妞</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">計點方式</dd>
+                <dd>
+                    ◇ A~10：按牌面計算<br>
+                    ◇ J、Q、K：皆為10點<br>
+                </dd>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 每局開始前下注成為玩家。<br>
+                    ◇ 每人發五張牌。 <br>
+                    ◇ 玩家將五張牌選任意三張，使其點數加總為10的倍數。<br>
+                    ◇ 剩下兩張牌的點數加總，個位數為最後的「妞數」。<br>
+                    例：兩張加起來為15，則為妞5；兩張加起來為10或20，則為妞妞。<br>
+                    ◇ 若無法湊出三張為10的倍數，則為無妞。<br>
+                    ◇ 妞妞最大，妞數較大則贏，無妞最小。<br>
+
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>妞數比關主高</td><td>贏1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>妞數比關主低或平手</td><td>輸1倍</td>  
+                    </tr>
+                    </table>
+                </dd>
+
+                <dt id="casino3">21點</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">計點方式</dd>
+                <dd>
+                    ◇ 2~10：按牌面計算<br>
+                    ◇ J、Q、K：皆為10點<br>
+                    ◇ A：可以算 1點或11點。<br>
+                </dd>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 每局開始前下注成為玩家。<br>
+                    ◇ 關主從左邊第一位玩家順時針發明牌，每輪一張共兩輪。<br> 
+                    ◇ 玩家可選擇要牌或停牌，依照發牌順序開始，停牌後才換下一位。<br>
+                    ◇ 玩家要牌結束後換關主要牌，關主必須一直要牌直到超過17點。<br>
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>點數比關主高</td><td>贏1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>點數比關主低或平手</td><td rowspan="2">輸1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>點數超過21點</td> 
+                    </tr>
+                    </table>
+                </dd>
+
+                <dt id="casino4">百家樂</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">計點方式</dd>
+                <dd>
+                    ◇ A~10：按牌面計算<br>
+                    ◇ J、Q、K：皆為10點
+                </dd>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 玩家可以下注於「莊家」或「閒家」任一方。 <br>
+                    ◇ 莊家和閒家各發兩張牌。 <br>
+                    ◇ 兩張牌點數相加，若超過十則取個位數。<br>例：7＋J＝17，實際點數是7。 <br>
+                    ◇ 若一方點數為8或9時直接獲勝，若點數為0~7則補一張牌<br>
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>下注於獲勝方</td><td>贏1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>下注於失敗方</td><td>輸1倍</td>  
+                    </tr>
+                    </table>
+                </dd>
+
+                <dt id="casino5">骰子牛</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">計點方式</dd>
+                <dd>
+                    ◇ 骰面1可視為1~6任意點數<br>
+                    ◇ 若當局有人喊過幾個1，則1僅能視為1
+                </dd>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 玩家順時針開始喊數，即宣稱桌上所有骰子中，某個點數至少出現幾次。 <br>
+                    例：「我覺得有 5 顆 3」表示所有玩家總共至少有 5 顆為3點的骰子。 <br>
+                    ◇ 下一位玩家可選擇以下兩項行動之一：<br>
+                    加碼喊更高（數量提高或點數提高）<br>
+                    質疑前一位玩家（喊抓）<br>
+                    ◇ 喊抓跟被抓的人強制離開，剩下的人自由選擇要不要離開，新的人補上，重新下一局。<br>
+
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>若點數多於或等於喊出顆數</td><td>質疑者輸，被質疑者贏</td><td rowspan="2">輸家給贏家4點籌碼</td>  
+                    </tr>
+                    <tr>
+                        <td>若點數少於喊出顆數</td><td>被質疑者輸，質疑者贏。 </td>
+                    </tr>
+                    </table>
+                </dd>
+
+                <dt id="casino6">十八仔</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 每局開始前下注成為玩家。<br>
+                    ◇ 先扣除2顆點數相同的骰子，其餘2顆點數合計即為其所得點數。<br>
+                    例：擲出1、1、3、6，即為9點<br>
+                    ◇ 若有兩組骰子點數相同，則取最大點的一組相加。<br>
+                    例：擲出1、1、3、3，即為6點<br>
+                    ◇ 若四顆骰子都不同或三顆骰子一樣，必須重擲。<br>
+                    ◇ 若四顆骰子正面均相同，不論點數多寡，均以勝計<br>
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>點數大於關主</td><td rowspan="2">贏1倍</td>  
+                    </tr>
+                    <tr>
+                        <td>四顆骰子正面均相同<br>(玩家和關主都骰到四個相同數字，判關主贏)</td>
+                    </tr>
+                    <tr>
+                        <td>點數小於關主</td><td>輸1倍</td>
+                    </tr>
+                    </table>
+                </dd>
+
+                <dt id="casino7">賽瓶蓋</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 玩家每局可下注一個顏色，每20分鐘為一局。 <br>
+                    ◇ 每局比賽會投影上布幕，在投影前玩家都可以下注。 <br>
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>下注的顏色獲得第一名</td><td>贏2倍</td>  
+                    </tr>
+                    <tr>
+                        <td>下注的顏色獲得第二名</td><td>贏1倍</td>
+                    </tr>
+                    </table>
+                </dd>
+
+                <dt id="casino8">彩票</dt>
+                <dd style="border-left: 3px none #777; margin: 5px 0px 5px 15px; padding: 0px;">規則</dd>
+                <dd>
+                    ◇ 每隔20分鐘主持人從01～99隨機抽出15個不重複的中獎號碼<br>
+                    ◇ 每位玩家從01～99中選擇1個號碼下注 <br>
+                    ◇ 寫在投注單，投注單給玩家領回，以投注單對獎
+                    <table>
+                    <caption>勝負判定</caption>
+                    <tr>
+                        <td>命中任一開獎號碼</td><td>贏5倍</td>
+                    </tr>
+                    </table>
+                </dd>
+
+            </dl>
+
+        </div>
+        <script>
+            function scrollto(index){
+                const item = document.getElementById(index);
+                window.scrollTo({
+                    top: item.offsetTop - 120,
+                    behavior: "smooth"
+                });
+            }
+        </script>
+
+        <span style="margin: 15px 0px 0px; opacity: 50%;">
+            <h2>-&nbsp;小賭怡情，大賭移民&nbsp;-</h2>
+        </span>
+    </main>
+{% endblock %}

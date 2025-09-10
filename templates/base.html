@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>東華資工宿營2025</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/head.webp' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'css/EricCSSReset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script>
+      const iconOpen = "{% static 'img/info_open.png' %}";
+      const iconClose = "{% static 'img/info_close.png' %}";
+    </script>
+    <script src="{% static 'js/info.js' %}" defer></script>
+    {% block cssjs %}
+    {% endblock %}
+</head>
+<body>
+        <div class="header">
+            <div class="icon">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'img/logo.png' %}" />
+                <a>
+            </div>
+            <nav>
+            {% if request.user.is_authenticated %}
+                <div class="icon">
+                    <a href="{% url 'logout' %}">
+                        <img src="{% static 'img/logout.png' %}" />
+                    <a>
+                </div>                
+            {% else %}
+                <div class="icon">
+                    <a href="{% url 'login' %}">
+                        <img src="{% static 'img/login.png' %}" />
+                    <a>
+                </div>
+            {% endif %}
+                <div class="icon" id="menuToggle">
+                    <img src="{% static 'img/info_close.png' %}" alt="info" id="menuIcon">
+                </div>
+            </nav>
+        </div>
+
+        <div style="height: 90px;">
+            <img src="{% static 'img/info_open.png' %}" style="width: 1px; height: 1px; position: absolute;" alt="preload">
+        </div>
+        {% if request.user.role == "team" %}
+                <div class="menu" id="dropdownMenu">
+                    <ul>
+                          <li><a href="{% url 'detail' %}">小隊主頁</a></li>
+                          <li><a href="{% url 'team_log' %}">積分紀錄</a></li>
+                          <li><a href="{% url 'bingo' %}">Bingo遊戲規則</a></li>
+                          <li><a href="{% url 'casino' %}">積彈高遊戲規則</a></li>
+                          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdb3b18neZWQLMiqSlM2hg5oH0S05cXJnci7Ra7tokM3Y9q1A/viewform?usp=header">隱藏任務</a></li>
+                    </ul>
+                </div>
+        {% elif request.user.role == "admin" %}
+                <div class="menu" id="dropdownMenu">
+                    <ul>
+                        <li><a href="{% url 'control' %}">發放積分</a></li>
+                        <li><a href="{% url 'admin_log' %}">積分紀錄</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1Uud_Luov6d8LbH3BkXNP0Qy3UP4KDIeZ?usp=sharing" target="_blank">各種文件連結</a></li>
+                    </ul>
+                </div>
+        {% else %}
+                <div class="menu" id="dropdownMenu">
+                  <ul>
+                    <li><a href="https://www.instagram.com/ndhucsie.114.camp/?igsh=MzRmb3dnZHdra2N0&utm_source=qr#">Instagram</a></li>
+                    <li><a href="{% url 'login' %}">登入解鎖更多內容...</a></li>
+                  </ul>
+                </div>
+        {% endif %}
+
+        {% block main%}
+        {% endblock %}
+
+        <div class="footer"><span>icon@正在用肝換學分的水工</span></div>
+</body>
+</html>

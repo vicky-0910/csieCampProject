@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block main%}
+    <main>
+        <div class="banner">
+            <h1>
+                遊戲開始時間<br>
+                {{ Bingotime }}<br>
+                {% if deltaminutes < 90 %}
+                <span>已經過{{deltaminutes}}分鐘</span>
+                {% endif %}          
+            </h1>
+            <p style="text-align: left; padding: 10px 20px;">
+            ◇ 5分鐘後警衛開始出沒<br>
+            ◇ 前20分鐘監獄關5分鐘<br>
+            ◇ 20~40分鐘監獄關6分鐘<br>
+            ◇ 40分鐘以後監獄關9分鐘
+            </p>
+        </div>
+
+        <div class="boxbg" style="background:#6beffe; margin: 0px 0px 10px;">
+            <h2 class="subtitle">
+                MAP<br>
+                活動地圖
+            </h2>
+            <a href="{% static 'img/bingomap.webp' %}"><img src="{% static 'img/bingomap.webp' %}" /></a>
+            <p style="color: #333">◇ A337為回收站與監獄點</p>
+        </div>
+
+        <div class="boxbg" style="background:#f68c55;">
+            <h2 class="subtitle">
+                BingoRules<br>
+                尋寶解謎
+            </h2>
+            <div class="inbox" style="background-color: #000;">
+                ◇ 一、三、五小隊為A組，找藍綠色扭蛋 <br>
+                ◇ 二、四、六小隊為B組，找粉色扭蛋 <br>
+                ◇ 隊員會對半分，繩子綁在手上一起行動<br>
+                ◇ 總共40個物品，藏於三間教室+走廊<br>
+                ◇ 全場關燈，用手機手電筒探路<br>
+            </div>
+        </div>
+
+        <div class="boxbg" style="background:#c95934;">
+            <h2 class="subtitle">
+                BingoRules<br>
+                警 衛
+            </h2>
+            <div class="inbox" style="background-color: #000; border: 5px solid #f0f0f0;">
+                ◇ 四位警衛於遊戲開始後5分鐘行動(綁鈴、綁腳鐐、用走的)<br>
+                ◇ 每間教室設有安全區，警衛無法進入安全區<br>
+                ◇ 被警衛抓到需進監獄<br>
+                ◇ 警衛不可守在教室外或在教室蹲點<br>
+            </div>
+        </div>
+
+        <div class="boxbg" style="background:#a95400;">
+            <h2 class="subtitle">
+                BingoRules<br>
+                安全區
+            </h2>
+            <div class="inbox" style="background-color: #000; border: 5px solid #f0f0f0;">
+                ◇ 警衛無法進入安全區<br>
+                ◇ 每間教室皆設有一個<br>
+                ◇ 走廊設有一個<br>
+                ◇ 每個只能塞一組<br>
+            </div>
+        </div>
+
+        <div class="boxbg" style="background:#44ba3b;">
+            <h2 class="subtitle">
+                A337<br>
+                監 獄 
+            </h2>
+            <div class="inbox" style="background-color: #000; border: 5px solid #f0f0f0;">
+                ◇ 遊戲前20分鐘關監獄5分鐘<br>
+                ◇ 20~40分鐘關監獄6分鐘<br>
+                ◇ 40分鐘以後關監獄9分鐘<br>
+                ◇ 被警衛帶回監獄的過程不能找物品<br>
+                ◇ 在監獄可解謎以提早離開 (要有計算過程)<br>
+                ◇ 若玩家用手機查答案被發現，解題作廢直接待滿<br>
+                ◇ 不能換謎題，不能延續解題<br>
+                ◇ 時間到一定要出去<br>
+            </div>
+        </div>
+        <div class="boxbg" style="background:#8fe229;">
+            <h2 class="subtitle">
+                A337<br>
+                回收站
+            </h2>
+            <div class="inbox" style="background-color: #000; border: 5px solid #f0f0f0;">
+                ◇ 一次最多繳交三個物品<br>
+                ◇ 若站出排隊區，警衛可以抓人<br>
+                ◇ 回收站工人登記數字<br>
+                ◇ 謎題總共需在1分鐘內解出<br>
+                ◇ 每題最多答2次<br>
+                ◇ 第一次答對可自選數字<br>
+                ◇ 第二次答對隨機選數字<br>
+                ◇ 答錯則退回物品，需重新排隊換取謎題<br>
+            </div>
+        </div>
+        <div class="boxbg" style="background:#ffc803;">
+            <h2 class="subtitle">
+                Point<br>
+                計分方式
+            </h2>
+            <div class="inbox" style="background-color: #000; border: 5px solid #f0f0f0;">
+                ◇ 一個數字+3分，連成一條線額外+10分<br>
+                ◇ 第一名得到積分75000pt，依排名高到低遞減5000pt<br>
+            </div>
+        </div>
+
+
+        <span style="margin: 15px 0px 0px; opacity: 50%;">
+            <h2>-&nbsp;音量降低，請勿奔跑&nbsp;-</h2>
+        </span>
+    </main>
+{% endblock %}

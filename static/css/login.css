@@ -1,0 +1,68 @@
+/* export to login */
+
+/*手機版面*/
+@media (max-width: 768px) {
+.login-container{
+    background: #333;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 20vh 0px;
+}
+.login-container input{
+	opacity: 50%;
+	margin: 7px 0px 3px;
+	min-height: 20px;
+}
+.login-container table td{
+	vertical-align: middle;
+}
+.login-container button{
+	margin: 5px;
+	padding: 5px 5px;
+	background-color: #b8f818;
+	text-decoration: none;
+	text-align: justify;
+}
+}
+/*電腦版面*/
+@media (min-width: 769px) {
+.login-container{
+    background: #333;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 60px 0px;
+}
+.login-container input{
+	opacity: 50%;
+	margin: 7px;
+	min-height: 25px;
+}
+.login-container table td{
+	vertical-align: middle;
+	padding: 5px;
+}
+.login-container button{
+	margin: 5px 0px 0px;
+	padding: 5px 5px;
+	text-decoration: none;
+	background-color: #b8f818;
+}
+.login-container button:hover{
+	background-color: #f8d878;
+	color: #004058;
+}
+}

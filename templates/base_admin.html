@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+<link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+
+{% block main%}
+<!--創建使用者，如果是小隊則同時建表-->
+  <main>
+      <div class="boxbg">          
+          <form method="POST" action="{% url 'create' %}">
+          {% csrf_token %}
+          <h2>創建使用者</h2>
+          {% if success_msg %}
+              <p style="color: green; font-weight: bold;">{{ success_msg }}</p>
+          {% endif %}
+
+          <!-- 錯誤訊息 (紅色) -->
+          {% if error_msg %}
+              <p style="color: red; font-weight: bold;">{{ error_msg }}</p>
+          {% endif %}
+              <input type="text" name="username" placeholder="帳號" required><br>
+              <input type="password" name="password" placeholder="密碼" required><br>
+              <select name="role">
+                <option value="team">小隊</option>
+                <option value="admin">管理者</option>
+              </select>
+          <button type="submit">登入</button>
+          </form>
+      </div>
+    </main>
+{% endblock %}

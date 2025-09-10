@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="{% static 'js/type.js' %}" defer></script>
+{% endblock %}
+
+{% block main%}
+	<main>
+	<div class="banner">
+	    <h1 id="typeTarget">
+	        {{teamname}}.
+	        現有積分： {{ current_pt }}pt
+	    </h1>	    
+	</div>
+
+	<div class="schedule" style="background-color: #555; margin: 0px;">
+	    <h2 class="subtitle">
+	        Detail<br>
+	        活動流程
+	    </h2>
+	    <div class="wrapper">
+
+	        <table>
+	            <caption>Day1 09/19</caption>
+	        <thead>
+	            <tr><th >時間</th><th >活動</th><th >地點</th><tr>
+	        </thead>
+	            <tbody>
+	                <tr>
+	                <td>16:30 - 17:00</td>
+	                <td>集合</td>
+	                <td rowspan="3" style="border-left: 3px solid #555">理工二館 A437</td>
+	                </tr>
+
+	                <tr>
+	                <td>17:00 - 18:00</td>
+	                <td>行前說明 & 晚餐</td>
+	                </tr>
+
+	                <tr>
+	                <td>18:00 - 19:00</td>
+	                <td>破冰</td>
+	                </tr>
+
+	                <tr>
+	                <td>19:30 - 21:20</td>
+	                <td>Bingo</td>
+	                <td style="border-left: 3px solid #555">理工二館三樓</td>
+	                </tr>
+	            </tbody>
+	        </table>
+
+	        <table>
+	            <caption>Day2 09/20</caption>
+	        <thead>
+	            <tr><th >時間</th><th >活動</th><th >地點</th><tr>
+	        </thead>
+	            <tbody>
+	                <tr>
+	                <td>07:30 - 08:00</td>
+	                <td>集合</td>
+	                <td style="border-left: 3px solid #555">集賢館</td>
+	                </tr>
+	                <tr>
+	                <td>08:00 - 16:00</td>
+	                <td>泛舟</td>
+	                <td style="border-left: 3px solid #555">秀姑巒溪</td>
+	                </tr>
+	                <tr>
+	                <td>16:00 - 17:30</td>
+	                <td>到民宿休息</td>
+	                <td rowspan="3" style="border-left: 3px solid #555">黃家溫泉</td>
+	                </tr>
+	                <tr>
+	                <td>17:30 - 20:30</td>
+	                <td>烤肉</td>
+	                </tr>
+	                <tr>
+	                <td>22:30 - </td>
+	                <td>看星星</td>
+	                </tr>
+	            </tbody>
+	        </table>
+
+	        <table>
+	            <caption>Day3 09/21</caption>
+	        <thead>
+	            <tr><th >時間</th><th >活動</th><th >地點</th><tr>
+	        </thead>
+	            <tbody>
+	                <tr>
+	                <td>07:30 - 08:40</td>
+	                <td>吃早餐</td>
+	                <td rowspan="2" style="border-left: 3px solid #555">黃家溫泉</td>
+	                </tr>
+	                <tr>
+	                <td>08:40 - 09:00</td>
+	                <td>集合</td> 
+	                </tr>
+	                <tr>
+	                <td>10:00 - 11:00</td>
+	                <td>回東華、休息</td>
+	                <td style="border-left: 3px solid #555">各自宿舍</td>
+	                </tr>
+	                <tr>
+	                <td>11:00 - 13:00</td>
+	                <td>吃pizza</td>
+	                <td style="border-left: 3px solid #555">理工二館 A337</td>
+	                </tr>
+	                <tr>
+	                <td>13:00 - 15:00 </td>
+	                <td>積彈高</td>
+	                <td style="border-left: 3px solid #555">理工二館 A437</td>
+	                </tr>
+	                <tr>
+	                <td>18:00 - 18:30 </td>
+	                <td>晚會集合</td>
+	                <td rowspan="2" style="border-left: 3px solid #555">管院</td>
+	                </tr> 
+	                <tr>
+	                <td>18:30 - 21:30 </td>
+	                <td>晚會</td>
+	                </tr>
+
+	            </tbody>
+	        </table>
+	    </div>
+	</div>
+
+	<div class="boxbg" style="background-color: #333;">
+	    <h2 class="subtitle">
+	        Teammate<br>
+	        分隊名單
+	    </h2>
+	    <img src="{% static 'img/foo.png' %}" />
+	</div>
+
+	<div class="boxbg" style="background-color: #555;">
+	    <h2 class="subtitle">
+	        Roommmate<br>
+	        分房名單
+	    </h2>
+	    <img src="{% static 'img/foo.png' %}" />
+	</div>
+
+	<div class="socialmedia">
+	    <span class="blink">▶</span>
+	    <h2 class="signup">
+	        <a href="https://www.instagram.com/ndhucsie.114.camp/?igsh=MzRmb3dnZHdra2N0&utm_source=qr#">
+	        Instagram
+	        </a>
+	    </h2>
+
+	    <h2 class="signup">
+	        <a href="https://line.me/ti/g/N4BVUsPvME">
+	        Line
+	        </a>
+	    </h2>
+	</div>
+
+	<span style="opacity: 50%;">
+        <h2>-&nbsp;{{username}}&nbsp;-</h2>
+    </span>
+	
+	</main>
+
+{% endblock %}

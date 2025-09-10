@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block main%}
+<!--創建使用者，如果是小隊則同時建表-->
+  <main>        
+      <form method="POST" action="{% url 'change' %}">
+      {% csrf_token %}
+      <table>
+          <caption style="border-bottom: 3px solid #555;"><h2>更改密碼</h2></caption>
+      {% if success_msg %}
+          <tr><td style="color:#0f0;">{{ success_msg }}</td></tr>
+      {% elif error_msg %}
+          <tr><td style="color:#f00;">{{ error_msg }}</td></tr>
+      {% endif %}
+          <tr><td><input type="text" name="username" placeholder="帳號" required><br></td></tr>
+          <tr><td><input type="password" name="password" placeholder="密碼" required><br></td></tr>
+          <tr><td><button type="submit">更改</button></td></tr>
+      </table>
+      </form>
+    </main>
+{% endblock %}

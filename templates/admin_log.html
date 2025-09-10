@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <script src="{% static 'js/switch.js' %}" defer></script>
+{% endblock %}
+
+{% block main%}
+<main>
+{% if messages %}
+
+  {% for message in messages %}
+    <div class="message">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+    <h2>身分：{{request.user.username}}</h2>
+
+    <div class="table-container">
+    <ul class="tabs">
+      <li class="active">積分紀錄</li>
+      <li>小隊紀錄</li>
+    </ul>
+
+    <table class="open">
+        <caption>Bingo / 積彈高結算 要六個小隊都刪除才能重新發放</caption>
+            <thead>
+                <th>隊伍</th>
+                <th>原因</th>
+                <th>積分</th>
+                <th>持有積分</th>
+                <th>修改</th>
+            </thead>
+            <tbody>
+                {% for record in record_list %}
+                <tr style="border-bottom:none;">
+                    <td class="record">{{record.team.user.username}}</td>
+                    <td class="record">{{record.reason}}</td>   
+                    <td class="record {% if record.change > 0 %}plus{% elif record.change < 0 %}minus{% endif %}">{{ record.change }}</td> 
+                    <td class="record">{{record.balance}}</td>   
+                    <td class="record">
+                        <form style="display:inline" method="post" action="{% url 'delete' record.id %}">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('確定刪除？')" class="delete">
+                                刪除
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr style="border: none;">
+                    <td colspan="3" class="time" style="text-align: left;">由{{record.modified_by}}新增</td>
+                    <td colspan="2" class="time">{{record.created_at}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+
+    <table>
+            <thead>
+                <th>隊伍</th>
+                <th>持有積分</th>
+                <th>定存</th>
+            </thead>
+            <tbody>
+                {% for team in teams %}
+                <tr style="border-bottom:none;">
+                    <td class="record">{{team.user.username}}</td>
+                    <td class="record">{{team.current_points}}</td>   
+                    <td class="record {% if record.change > 0 %}plus{% elif record.change < 0 %}minus{% endif %}">{{ team.fixed_savings }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+    </div>
+</main>
+{% endblock %}

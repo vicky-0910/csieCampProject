@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="{% static 'js/type.js' %}" defer></script>
+{% endblock %}
+
+{% block main%}
+    <main>
+        <div class="banner">
+            <h1 id="typeTarget">
+                {{teamname}}.
+                現有積分： {{ current_pt }}pt
+            </h1>       
+        </div>
+            <table>
+                <thead>
+                    <th>原因</th>
+                    <th>積分</th>                
+                    <th>持有積分</th>
+                </thead>
+                <tbody>
+                    {% for record in record_list %}
+                    <tr style="border-bottom:none;">
+                        <td class="record">{{record.reason}}</td>   
+                        <td class="record {% if record.change > 0 %}plus{% elif record.change < 0 %}minus{% endif %}">{{ record.change }}</td> 
+                        <td class="record">{{record.balance}}</td>
+                    </tr>
+                    <tr style="border: none;">
+                        <td colspan="3" class="time">{{record.created_at}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </main>
+{% endblock %}

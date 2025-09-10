@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% block cssjs %}
+{% endblock %}
+
+{% block nav %}
+	    <div class="icon">
+	        <a href="{% url 'logout' %}">
+	            <img src="{% static 'img/logout.png' %}" />
+	        <a>
+	    </div>
+{% endblock %}
+
+{% block menu %}
+  <div class="menu" id="dropdownMenu">
+    <ul>
+      <li><a href="{% url 'detail' %}">小隊主頁</a></li>
+      <li><a href="{% url 'team_log' %}">積分紀錄</a></li>
+      <li><a href="{% url 'bingo' %}">Bingo遊戲規則</a></li>
+      <li><a href="{% url 'casino' %}">積彈高遊戲規則</a></li>
+      <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdb3b18neZWQLMiqSlM2hg5oH0S05cXJnci7Ra7tokM3Y9q1A/viewform?usp=header">隱藏任務</a></li>
+    </ul>
+  </div>
+{% endblock %}
+
+{% block main%}
+{% endblock %}
