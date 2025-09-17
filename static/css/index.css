@@ -114,7 +114,7 @@
     padding: 5px;    
   }
   .boxbg ul{
-    width: 90%;
+    width: 280px;
     display: flex;
     align-items: center;
     justify-content: space-between;

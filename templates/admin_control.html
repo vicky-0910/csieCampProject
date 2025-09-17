@@ -17,6 +17,10 @@
     {% endif %}
     
     <h2>身分：{{request.user.username}}</h2>
+    <button onclick="return confirm('確定重設Bingo與Bonus內容？')">
+        <a href="{% url 'resetgame' %}" style="text-decoration: none;">重設</a>
+    </button>
+
     <div class="table-container">
     <ul class="tabs">
       <li >Bingo</li>
@@ -54,8 +58,8 @@
             {% for i in teams %}
             <tr>
                 <td>第{{ i.num }}小隊</td>
-                <td><input type="number" name="item_{{ forloop.counter }}" placeholder="0" min="0" required></td>
-                <td><input type="number" name="line_{{ forloop.counter }}" placeholder="0" min="0" required></td>
+                <td><input type="number" name="item_{{ forloop.counter }}" placeholder="0" min="0" max="40" required></td>
+                <td><input type="number" name="line_{{ forloop.counter }}" placeholder="0" min="0" max="40" required></td>
                 <td>0</td>
                 <td>0</td>
                 <td>0 pt</td>
@@ -92,7 +96,7 @@
             </select>
             </td>
             <td>{{teams.0.team.current_points}} pt</td>
-            <td><input type="number" name="chip" placeholder="0" min="1" required></td>
+            <td><input type="number" name="chip" placeholder="0" min="1" max="200" required></td>
             <td>0 pt</td>
             </tr>
         </tbody>
@@ -119,7 +123,7 @@
             <tr>
                 <td>第{{ i.num }}小隊</td>
                 <td>{{ i.team.fixed_savings }} pt</td>
-                <td><input type="number" name="chip_{{ forloop.counter }}" placeholder="0" min="0" required></td>
+                <td><input type="number" name="chip_{{ forloop.counter }}" placeholder="0" min="0" max="5000 " required></td>
                 <td>0 pt</td>
             </tr>
             {% endfor %}
@@ -158,7 +162,7 @@
                     <option value="6">第六小隊</option>
                 </select>
                 </td>
-                <td><input type="number" name="pt" placeholder="0" value="300" required></td>
+                <td><input type="number" name="pt" placeholder="0" value="300" min="0" max="10000"  required></td>
             </tr>
         </tbody>
         <tfoot>
@@ -190,7 +194,7 @@
             {% for i in teams %}
             <tr>
                 <td>第{{ i.num }}小隊</td>
-                <td><input type="number" name="pt_{{ forloop.counter }}" placeholder="0" ></td>
+                <td><input type="number" name="pt_{{ forloop.counter }}" placeholder="0" max="1000000" min="-1000000" ></td>
                 <td>
                 <input type="text" name="reason_{{ forloop.counter }}" list="hiddentask1" >
                     <datalist id="hiddentask1">

@@ -1,9 +1,9 @@
 # [START gaestd_py_django_app_yaml]
-runtime: python39
+runtime: python311
 
 env_variables:
   # This setting is used in settings.py to configure your ALLOWED_HOSTS
-  # APPENGINE_URL: PROJECT_ID.uc.r.appspot.com
+   APPENGINE_URL: https://csiecamp-0919-21.ts.r.appspot.com
 
 handlers:
 # This configures Google App Engine to serve the files in the app's static

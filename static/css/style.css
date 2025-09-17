@@ -25,6 +25,13 @@ ul, li, dd, dt, dl, button, select{
 button, select{
   text-align: center;
 }
+button{
+  color: #262626;
+}
+button a{
+  text-decoration: none;
+  color: #262626;
+}
 textarea{
   resize: none;
   opacity: .5;
@@ -35,7 +42,6 @@ textarea{
   border: 2px solid #888;
   border-radius: 5px;
   padding: 5px;
-  width: 100%;
   white-space: pre-line;
   word-break: break-all;
   text-align: left;
@@ -189,6 +195,10 @@ main .fade-in {
     padding: 0px 5%;
     min-height: calc(100vh - 190px);
     flex: 1;
+  }
+  button{
+    padding: 2px 5px;
+    font-size: 12px;
   }
   .message{
     top: 200px;

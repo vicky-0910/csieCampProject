@@ -29,8 +29,9 @@ urlpatterns = [
     path('bingorules/', views.bingo, name='bingo'),
     path('casinorules/', views.casino, name='casino'),
     path('startbingo/', views.bingostart, name='start'),
+    path('resetgame/', views.resetGamestatus, name='resetgame'),
     path('"delete/<int:record_id>/"', views.delete_record, name='delete'),
-    path('foradmin/', admin.site.urls),
-    path('2erftgyhj8y/', views.create_user, name='create'),
+    #path('foradmin/', admin.site.urls),
+    path('ftgyhj8y2er/', views.create_user, name='create'),
     path('w3e45r6tyuh/', views.password_change, name='change'),
 ]

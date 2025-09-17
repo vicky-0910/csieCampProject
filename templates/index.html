@@ -7,7 +7,13 @@
 
 {% block main%}
 	<main>
-
+    {% if messages %}
+      {% for message in messages %}
+        <div class="message">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
 	<div class="banner">
 		{% if request.user.is_authenticated %}
 		<h1 id="typeTarget">
@@ -24,7 +30,7 @@
 
 	<div class="hidden-before-type" id="main">
 		{% if request.user.is_authenticated %}
-		<div class="boxbg" style="background-color: #555; border-bottom: 5px solid #888;">
+		<div class="boxbg" style="width:100%;background-color: #555; border-bottom: 5px solid #888;">
 	    <!--div style="text-align: left; align-items: left; justify-content: left;"-->
 	    	<h2>隨便放個留言板</h2>
 	    <form method="post">
@@ -33,9 +39,9 @@
 		    <button type="submit" onclick="return confirm('留言後無法更改，確定送出？')">送出</button>
 		</form>
 	    </div>
-	    <div class="boxbg" style="background-color: #555">
+	    <div class="boxbg" style="width:100%;background-color: #555;">
 		{% for comment in comments %}
-        <div style="margin-left: {{ comment.pos }}%; margin-bottom: 5px;">
+        <div style="margin-left: {{ comment.pos }}%; margin-bottom: 5px; max-width: 70%; ">
             <span><p class="comment">{{ comment.comment }}</p></span>
         </div>
     	{% endfor %}
@@ -49,20 +55,20 @@
 	        <div class="dialog">
 	            <div class="text">
 	            迎新宿營是為了讓新生能在開學後認識彼此而舉行的活動，總共三天兩夜！<br>
-	            第一天預計於晚上六點集合，透過破冰遊戲讓大家有初步相處；第二天是戶外活動，將帶大家到秀姑巒溪泛舟，晚上還有溫泉民宿的烤肉；第三天會回到校內進行積分遊戲，以及最後包含積分拍賣、精彩表演的晚會。<br>
+	            第一天預計於晚上四點半集合，透過破冰遊戲讓大家有初步相處；第二天是戶外活動，將帶大家到秀姑巒溪泛舟，晚上還有溫泉民宿的烤肉；第三天會回到校內進行積分遊戲，以及最後的積分拍賣會。<br>
 	            </div>
 	            <div class="respond">
-	               <div class="q"><span class="arrow">▶</span> 活動時間<br></div>
+	               <div class="q"><span class="arrow">▶︎</span> 活動時間<br></div>
 	               <div class="a">2025/9/19-2025/9/21<br></div>
-	               <div class="q"><span class="arrow">▶</span> 參加費用<br></div>
+	               <div class="q"><span class="arrow">▶︎</span> 參加費用<br></div>
 	               <div class="a">2800/ 人<br>8/24 前早鳥優惠 2700/ 人 </div>
-	               <div class="q"><span class="arrow">▶</span> 報名期限</div>
+	               <div class="q"><span class="arrow">▶︎</span> 報名期限</div>
 	               <div class="a">即日起 -2025/9/11<br></div>
-	               <div class="q"><span class="arrow">▶</span> 繳費方式<br></div>
+	               <div class="q"><span class="arrow">▶︎</span> 繳費方式<br></div>
 	               <div class="a">9/13 前現金或轉帳<br></div>
-	               <div class="q"><span class="arrow">▶</span> 如果不能下水怎麼辦<br></div>
+	               <div class="q"><span class="arrow">▶︎</span> 如果不能下水怎麼辦<br></div>
 	               <div class="a">泛舟時也可以選擇去瑞穗牧場喔！<br></div>
-	               <div class="q"><span class="arrow">▶</span> 其他問題<br></div>
+	               <div class="q"><span class="arrow">▶︎</span> 其他問題<br></div>
 	               <div class="a">歡迎點右上角問號箱至IG詢問！<br></div>
 	            </div>
 	        </div>
@@ -83,7 +89,7 @@
 		<h2 class="signup">
 	        <a href="https://docs.google.com/forms/d/e/1FAIpQLScBZUtgIJM4Bq-Ekz5vmTPZHnxbrjnKRcDH29cB_3SQNX5HwQ/viewform?pli=1">
 	        Sign UP<br>
-	        <span class="blink">▶</span>我要報名！
+	        <span class="blink">▶︎</span>我要報名！
 	        </a>
 	    </h2>
 	    {% endif %}

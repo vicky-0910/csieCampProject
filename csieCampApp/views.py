@@ -15,6 +15,7 @@ def index(request):
             user = request.user,
             comment = comment
         )
+        return redirect("/")
     context = {
         "comments" : comments
     }
@@ -42,7 +43,6 @@ def logout_app(request):
     else:
         return redirect("/login/")
 
-@login_required
 def create_user(request):
     success_msg = ""
     error_msg = ""
@@ -79,20 +79,42 @@ def password_change(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
-        if CampUser.objects.filter(username=username).exists():
-            user = CampUser.objects.get(username=username)
-            user.set_password(password)
+        newpassword = request.POST.get("newpassword")
+        '''
+        user = CampUser.objects.get(username=username)
+        user.set_password(newpassword)
+        user.save()
+        success_msg = f"帳號 {username} 存在，密碼已更新"
+        '''
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            user.set_password(newpassword)
             user.save()
             success_msg = f"帳號 {username} 存在，密碼已更新"
         else:
-            error_msg = f"帳號 {username} 不存在"
+            error_msg = "帳號或密碼錯誤"
+        
     context = {
         "success_msg": success_msg,
         "error_msg": error_msg
     }
     return render(request, "change.html", context)
 
-#========= admin部分 =========
+@login_required
+def resetGamestatus(request):
+    debug_msg = ""
+    if GameStatus.objects.filter(key="bingo_start").exists() :
+        Bingostime = GameStatus.objects.get(key="bingo_start")
+        Bingostime.delete()
+        debug_msg += "重設Bingo時間 "
+    if GameStatus.objects.filter(key="question_num").exists() :
+        Qnum = GameStatus.objects.get(key="question_num")
+        Qnum.delete()
+        debug_msg += "重設Bonus題號"
+    messages.info(request, debug_msg)
+    return redirect("/admin_control/")
+
+#========= admin部分=========
 # control =========
 @login_required
 def control(request):
@@ -112,7 +134,9 @@ def control(request):
         
     if request.method == "POST":
         formid = request.POST.get("formid")
-        if formid == "bingo":
+        if request.user.username == "bank" and formid not in ["casinobank", "casinoend"]:
+            debug_msg = "× Error: 權限錯誤"
+        elif formid == "bingo":
             first = 75000
             step = 5000
             teamscore = [{"id": i, "score": 0} for i in range(1,7)]
@@ -149,7 +173,7 @@ def control(request):
             step = -500
             if team.fixed_savings == -1:
                 debug_msg = f"× Error: 第{num[int(i)-1]}小隊尚未提交定存"
-            elif team.current_points >= chip*step:
+            elif (team.current_points+chip*step) >= 0:
                 pt = chip*step
                 team.current_points += pt
                 team.save()
@@ -200,6 +224,7 @@ def control(request):
             )
             debug_msg = f"第{num[i-1]}小隊答對Q.{Qnum}"
             Qnum += 1
+            Qnum_str = str(Qnum)
             GameStatus.objects.update_or_create(
                 key = "question_num",
                 defaults={"value": Qnum}
@@ -229,9 +254,10 @@ def control(request):
                 debug_msg = "無修改"
         else :
             debug_msg = "未預期的錯誤"
+        team_list = [{"num": num[i-1],"team": TeamProfile.objects.get(user__username=f"team0{i}")} for i in range (1,7)]
         messages.info(request, debug_msg)
         #return redirect('control')
-    messages.info(request, debug_msg)
+    #messages.info(request, debug_msg)
     context = {
         "Bingotime" : Bingotime,
         "teams": team_list,
@@ -240,7 +266,7 @@ def control(request):
         "Qnum": Qnum_str
     }
     return render(request, 'admin_control.html',context)
-
+@login_required
 def bingostart(request):
     if request.user.role != "admin":
         return redirect("/")
@@ -373,6 +399,14 @@ def bingo(request):
 def casino(request):
     if request.user.role != "team":
         return redirect("/")
+    now = timezone.localtime(timezone.now())
+    block_start = datetime.datetime(2025, 9, 19, 0, 0, 0, tzinfo=timezone.get_current_timezone())
+    block_end = datetime.datetime(2025, 9, 21, 0, 0, 0, tzinfo=timezone.get_current_timezone())
+
+    if block_start <= now < block_end:
+        messages.info(request, "積彈高尚未開始")
+        return redirect("/")
+    
     username = request.user.username
     team = TeamProfile.objects.get(user__username=username)
     

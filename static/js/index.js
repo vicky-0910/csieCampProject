@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.querySelectorAll('.respond .q').forEach(el => {
         el.classList.remove('open');
         const arrow = el.querySelector('.arrow');
-        if (arrow) arrow.textContent = '▶';
+        if (arrow) arrow.textContent = '▶︎';
       });
 
       if (isOpening) {
