@@ -40,11 +40,13 @@
 		</form>
 	    </div>
 	    <div class="boxbg" style="width:100%;background-color: #555;">
-		{% for comment in comments %}
-        <div style="margin-left: {{ comment.pos }}%; margin-bottom: 5px; max-width: 70%; ">
-            <span><p class="comment">{{ comment.comment }}</p></span>
-        </div>
-    	{% endfor %}
+		  {% for comment in comments %}
+		    <div style="margin-right: {{ comment.pos }}%; margin-bottom: 5px; max-width: 70%;">
+		      <div class="comment-wrapper">
+		        <p class="comment">{{ comment.comment }}</p>
+		      </div>
+		    </div>
+		  {% endfor %}
 	    </div>
 	    {% else %}
 	    <div class="intro">

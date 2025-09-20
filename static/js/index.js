@@ -63,5 +63,23 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+  // ========= 處理複製文:) =========
+  document.querySelectorAll('.comment-wrapper').forEach(wrapper => {
+    const comment = wrapper.querySelector('.comment');
 
+    if (comment.scrollHeight > 200) {
+      wrapper.classList.add('collapsed');
+
+      wrapper.addEventListener('click', () => {
+        if (wrapper.classList.contains('expanded')) {
+          wrapper.classList.remove('expanded');
+          wrapper.classList.add('collapsed');
+        } 
+        else {
+          wrapper.classList.add('expanded');
+          wrapper.classList.remove('collapsed');
+        }
+      });
+    }
+  });
 });

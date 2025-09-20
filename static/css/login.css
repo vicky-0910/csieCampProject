@@ -30,6 +30,10 @@
 	text-decoration: none;
 	text-align: justify;
 }
+.login-container tr input {
+  width: 150px;
+}
+
 }
 /*電腦版面*/
 @media (min-width: 769px) {

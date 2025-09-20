@@ -37,15 +37,49 @@ textarea{
   opacity: .5;
   width: 100%;
 }
+
 .comment{
   background-color: #333;
   border: 2px solid #888;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
   padding: 5px;
+  width: 100%;
   white-space: pre-line;
   word-break: break-all;
   text-align: left;
 }
+.comment-wrapper {
+  max-height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+.comment-wrapper.collapsed{
+  max-height: 50px;
+}
+.comment-wrapper.collapsed::after{
+  content: "▼ 展開留言";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, #888 60%, transparent);
+  color: #333;
+  text-align: center;
+  cursor: pointer;
+  padding: 5px 0px 0px;
+}
+.comment-wrapper.expanded {
+  max-height: none;
+}
+.comment-wrapper.expanded::after {
+  content: "▲ 收起留言";
+  background: linear-gradient(to bottom, #888 60%, transparent);
+  color: #333;
+  position: static;
+  display: block;
+  padding: 0px 0px 5px;
+}
+
 .header {
   background-image: url("../img/navbar.webp");
   background-repeat: repeat-x;

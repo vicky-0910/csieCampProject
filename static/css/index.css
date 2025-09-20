@@ -167,7 +167,7 @@
   .boxbg dd table tr td{
     vertical-align: middle;
     padding: 3px;
-    border: 1px dotted; #555;
+    border: 1px dotted #555;
   }
   .inbox{
     text-align: left;
@@ -443,7 +443,7 @@
   .boxbg dd table tr td{
     vertical-align: middle;
     padding: 3px;
-    border: 1px dotted; #555;
+    border: 1px dotted #555;
   }
 
   .inbox{
